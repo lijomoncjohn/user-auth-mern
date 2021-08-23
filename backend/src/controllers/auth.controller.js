@@ -1,7 +1,8 @@
+const asyncHandler = require("../helpers/asyncHandler");
 const User = require("../models/user.model");
 const ErrorResponse = require("../utils/errorResponse");
 
-exports.login = async (req, res, next) => {
+exports.login = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
@@ -29,8 +30,19 @@ exports.login = async (req, res, next) => {
             userId: user._id,
         },
     });
-}
+})
 
-exports.register = async (req, res, next) => {
-    res.sendStatus(200)
-}
+exports.register = asyncHandler(async (req, res, next) => {
+    const user = await User.create(req.body)
+
+    const token = user.genrateToken();
+
+    return res.status(200).json({
+        success: true,
+        message: 'Loggin success',
+        data: {
+            token,
+            userId: user._id,
+        },
+    });
+})

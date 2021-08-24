@@ -67,6 +67,12 @@ exports.logout = asyncHandler(async (req, res, next) => {
         return token.token !== req.token
     })
 
+    const history = await UserHistory.findOneAndUpdate({ token: req.token }, {
+        loggedOutAt: Date.now(),
+        tokenDeleted: true,
+        device: req.headers['user-agent'],
+    });
+
     await req.user.save()
 
     return res.status(200).json({

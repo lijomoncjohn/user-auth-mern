@@ -1,10 +1,10 @@
 import { ActionType } from "./actionType";
 
-export const AuthAction = {
-    details(values) {
+export const UserAction = {
+    details(token) {
         return {
             type: ActionType.GET_USER_DETAILS_BEGIN,
-            values
+            token
         }
     },
 }

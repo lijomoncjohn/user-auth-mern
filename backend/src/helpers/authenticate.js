@@ -19,18 +19,13 @@ exports.authenticate = async (req, res, next) => {
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        const user = await User.findOne({ _id: decoded.id });
 
-        if (!user) {
-            return next(new ErrorResponse('Not authorized to access this', 401));
-        }
-
-        req.user = user;
+        req.user = await User.findOne({ _id: decoded.id, 'tokens.token': token });
         req.token = token;
 
         next();
     } catch (error) {
         console.log(error.message);
-        return next(new ErrorResponse('Token has expired', 403));
+        return next(new ErrorResponse('Not authorized to access this', 401));
     }
 }

@@ -5,7 +5,9 @@ export const initialUserState = {
     user: {
         success: false,
         message: null,
-        data: {},
+        data: {
+            history: []
+        },
         error: {},
     }
 }

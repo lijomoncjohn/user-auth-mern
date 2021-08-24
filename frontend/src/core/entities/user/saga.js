@@ -4,7 +4,7 @@ import { ActionType } from './actionType';
 import { Service } from './service';
 
 const userDetailsSaga = function* (action) {
-    const userResponse = yield Service.login(action.token);
+    const userResponse = yield Service.getUserDetails(action.token);
 
     if (!userResponse.error) {
         yield put({
@@ -20,7 +20,7 @@ const userDetailsSaga = function* (action) {
 };
 
 const userDetailsWatch = function* () {
-    yield takeLatest(ActionType.LOGIN_BEGIN, userDetailsSaga);
+    yield takeLatest(ActionType.GET_USER_DETAILS_BEGIN, userDetailsSaga);
 };
 
 export { userDetailsWatch }

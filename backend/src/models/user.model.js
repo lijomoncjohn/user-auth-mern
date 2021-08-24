@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
             token: { type: String }
         }
     ]
-}, { timestamps: true })
+}, { timestamps: true, toJSON: { virtuals: true } })
 
 // Password encryption
 UserSchema.pre('save', async function (next) {
@@ -52,5 +52,12 @@ UserSchema.methods.genrateToken = function () {
 
     return token;
 };
+
+UserSchema.virtual('history', {
+    ref: 'UserHistory',
+    localField: '_id',
+    foreignField: 'user',
+    justOne: false
+});
 
 module.exports = User = mongoose.model('User', UserSchema)

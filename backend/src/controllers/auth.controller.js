@@ -1,6 +1,8 @@
 const asyncHandler = require("../helpers/asyncHandler");
-const User = require("../models/user.model");
 const ErrorResponse = require("../utils/errorResponse");
+
+const User = require("../models/user.model");
+const UserHistory = require("../models/userHistory.model");
 
 exports.login = asyncHandler(async (req, res, next) => {
     const { email, password } = req.body;
@@ -20,7 +22,20 @@ exports.login = asyncHandler(async (req, res, next) => {
         })
     }
 
-    const token = user.genrateToken();
+    const token = await user.genrateToken();
+
+    user.tokens = user.tokens.concat({ token });
+
+    await user.save();
+
+    const history = new UserHistory({
+        user: user._id,
+        loggedInAt: Date.now(),
+        token: token,
+        device: req.headers['user-agent'],
+    });
+
+    await history.save();
 
     return res.status(200).json({
         success: true,
@@ -45,4 +60,18 @@ exports.register = asyncHandler(async (req, res, next) => {
             userId: user._id,
         },
     });
+})
+
+exports.logout = asyncHandler(async (req, res, next) => {
+    req.user.tokens = req.user.tokens.filter((token) => {
+        return token.token !== req.token
+    })
+
+    await req.user.save()
+
+    return res.status(200).json({
+        success: true,
+        message: 'Logged out successfully'
+    })
+
 })

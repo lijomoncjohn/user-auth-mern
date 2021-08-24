@@ -1,10 +1,12 @@
 import React from 'react';
+import Navbar from '../NavBar/Navbar';
 
 const AuthorizedLayout = (props) => {
     return (
-        <div>
+        <>
+            <Navbar />
             {props.children}
-        </div>
+        </>
     );
 };
 

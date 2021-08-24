@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 import FormGroup from '../../components/Form/FormGroup';
 import FormLabel from '../../components/Form/FormLabel';
@@ -34,10 +35,15 @@ const Login = () => {
 							/>
 						</FormGroup>
 						<div className='d-flex justify-content-between'>
-							<span className='mt-2'>
+							<Link to={'/register'} className='mt-2'>
 								Forgot password?
-							</span>
+							</Link>
 							<Button className='btn-primary btn-success px-3' title='Login' />
+						</div>
+						<div className='d-flex justify-content-start mt-3'>
+							<Link to={'/register'}>
+								Register Now
+							</Link>
 						</div>
 					</form>
 				</CardBody>

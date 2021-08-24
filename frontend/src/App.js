@@ -1,10 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
 import Login from './containers/Auth/Login';
+import Register from './containers/Auth/Register';
 
 function App() {
   return (
-    <Login />
+    <Router>
+      <Switch>
+        <Route path={'/register'} component={Register} />
+        <Route path={'/'} component={Login} />
+      </Switch>
+    </Router>
   );
 }
 

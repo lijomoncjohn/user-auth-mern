@@ -1,0 +1,7 @@
+{
+    "BASE_URL": "http://localhost:4000",
+    "CONTROLLER_AUTH": "auth",
+    "CONTROLLER_USER": "user",
+    "ACTION_LOGIN": "login",
+    "ACTION_REGISTER": "register"
+}

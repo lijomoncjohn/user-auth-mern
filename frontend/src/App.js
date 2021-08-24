@@ -7,6 +7,7 @@ import Register from './containers/Auth/Register';
 import Login from './containers/Auth/Login';
 import Layout from './Layout/Layout';
 import Home from './containers/Home/Home';
+import Logout from './containers/Auth/Logout';
 
 function App() {
   const { token, userId, login, logout } = useAuth();
@@ -16,6 +17,7 @@ function App() {
   if (token) {
     routes = (
       <Switch >
+        <Route path={'/logout'} component={Logout} />
         <Route path={'/home'} component={Home} />
         <Route path='*' component={Home} />
       </Switch>

@@ -1,54 +1,31 @@
 import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
 import { AuthContext } from '../../core/context/authContext';
+import { AuthAction } from '../../core/entities/auth/action';
 
 const Logout = () => {
+	const dispatch = useDispatch();
 	const auth = useContext(AuthContext);
+	const history = useHistory();
 
-	useEffect(() => {}, []);
+	const logoutData = useSelector((state) => state.auth.logout);
+
+	useEffect(() => {
+		if (logoutData !== undefined && logoutData.success) {
+			auth.logout();
+			history.push('/');
+		}
+	}, [dispatch, logoutData]);
+
+	useEffect(() => {
+		dispatch(AuthAction.logout(auth.token));
+
+	}, [])
 
 	return (
 		<>
-			<button
-				type='button'
-				className='btn btn-primary'
-				data-toggle='modal'
-				data-target='#exampleModal'>
-				Launch demo modal
-			</button>
-
-			<div
-				className='modal fade'
-				id='exampleModal'
-				tabindex='-1'
-				role='dialog'
-				aria-labelledby='exampleModalLabel'
-				aria-hidden='true'>
-				<div className='modal-dialog' role='document'>
-					<div className='modal-content'>
-						<div className='modal-header'>
-							<h5 className='modal-title' id='exampleModalLabel'>
-								Modal title
-							</h5>
-							<button
-								type='button'
-								className='close'
-								data-dismiss='modal'
-								aria-label='Close'>
-								<span aria-hidden='true'>&times;</span>
-							</button>
-						</div>
-						<div className='modal-body'>...</div>
-						<div className='modal-footer'>
-							<button type='button' className='btn btn-secondary' data-dismiss='modal'>
-								Close
-							</button>
-							<button type='button' className='btn btn-primary'>
-								Save changes
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			<p>{'Logging you out. Please wait...'}</p>
 		</>
 	);
 };

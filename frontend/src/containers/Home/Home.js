@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import moment from 'moment'
 
 import Card from '../../components/UI/Card/Card';
 import CardBody from '../../components/UI/Card/CardBody';
@@ -22,7 +23,7 @@ const Home = () => {
     return (
         <>
             <Navbar />
-            <div className='container col-6'>
+            <div className='container col-8'>
                 <Card>
                     <CardHeader>
                         <h5 className='font-weight-bold'>User details</h5>
@@ -43,8 +44,8 @@ const Home = () => {
                                 </thead>
                                 <tbody>
                                     {user !== undefined && user.history !== undefined && user.history.map(h => (
-                                        <tr>
-                                            <th scope="row">{h.tokenDeleted === true ? h.loggedOutAt : h.loggedInAt}</th>
+                                        <tr key={h._id}>
+                                            <th scope="row">{h.tokenDeleted === true ? moment(h.loggedOutAt).format('MMMM Do YYYY, h:mm:ss a') : moment(h.loggedInAt).format('MMMM Do YYYY, h:mm:ss a')}</th>
                                             <td>{h.tokenDeleted === true ? 'Logged Out' : 'Logged In'}</td>
                                             <td style={{ wordWrap: 'break-word' }}>{h.token}</td>
                                             <td>{h.tokenDeleted === true ? 'Yes' : 'No'}</td>

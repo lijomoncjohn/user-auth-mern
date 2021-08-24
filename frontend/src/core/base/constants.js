@@ -17,4 +17,6 @@ export const HTTP_HEADER = {
 export const AUTH_STATE = {
     LOGIN_SUCCESS: 'LS',
     LOGIN_FAILED: 'LF',
+    LOGOUT_SUCCESS: 'LOS',
+    LOGOUT_FAILED: 'LOF',
 };

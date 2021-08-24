@@ -7,5 +7,11 @@ export const initialAuthState = {
         message: null,
         data: {},
         error: {},
+    },
+    logout: {
+        success: false,
+        message: null,
+        data: {},
+        error: {},
     }
 }

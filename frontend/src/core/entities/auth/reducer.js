@@ -38,6 +38,32 @@ const reducer = createReducer(initialAuthState, {
         state.login.error = null;
         state.login.data = {};
     },
+    // Logout
+    [ActionType.LOGOUT_BEGIN]: (state) => {
+        state.logout.success = ApiStatus.LOADING;
+        state.logout.message = null;
+        state.logout.data = {};
+        state.logout.error = null;
+    },
+    [ActionType.LOGOUT_SUCCESS]: (state, data) => {
+        state.apiStatus = 1;
+        if (data.data.success) {
+            state.logout.success = AUTH_STATE.LOGOUT_SUCCESS;
+            state.logout.message = data.data.message || 'success';
+            state.logout.error = null;
+            state.logout.data = data.data.data;
+        } else {
+            state.logout.success = AUTH_STATE.LOGOUT_FAILED;
+            state.logout.message = data.data.message;
+            state.logout.error = data.data.error;
+        }
+    },
+    [ActionType.LOGOUT_FAILED]: (state, data) => {
+        state.apiStatus = 1;
+        state.logout.success = AUTH_STATE.LOGOUT_FAILED;
+        state.logout.message = data.data.message;
+        state.logout.error = data.data.error;
+    },
 })
 debugger;
 

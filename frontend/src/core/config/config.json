@@ -3,5 +3,6 @@
     "CONTROLLER_AUTH": "auth",
     "CONTROLLER_USER": "user",
     "ACTION_LOGIN": "login",
+    "ACTION_LOGOUT": "logout",
     "ACTION_REGISTER": "register"
 }

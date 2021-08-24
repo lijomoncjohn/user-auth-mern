@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom'
+import React, { useContext, useEffect } from 'react';
+import { Link, useHistory } from 'react-router-dom'
 import { Formik } from 'formik'
+import { useDispatch, useSelector } from 'react-redux';
 
 import FormGroup from '../../components/Form/FormGroup';
 import FormLabel from '../../components/Form/FormLabel';
@@ -11,11 +12,41 @@ import CardBody from '../../components/UI/Card/CardBody';
 import CardHeader from '../../components/UI/Card/CardHeader';
 import ErrorText from '../../components/Form/ErrorText'
 
+import { AuthAction } from '../../core/entities/auth/action';
+import { AuthContext } from '../../core/context/authContext';
+
 import './Login.css';
+import { AUTH_STATE } from '../../core/base/constants';
 
 const Login = () => {
+	const dispatch = useDispatch();
+	const history = useHistory();
+	const auth = useContext(AuthContext);
+
+	const login = useSelector(state => state.auth.login);
+	const loginStatus = useSelector((state) => state.auth.login.success);
+
+	useEffect(() => {
+		if (login !== undefined && login.success) {
+			auth.login(login.data.token, login.data.userId);
+			history.push('/home');
+		}
+	}, [dispatch, login]);
+
+	useEffect(() => {
+		if (loginStatus === AUTH_STATE.LOGIN_FAILED) {
+			alert(login.message || "Login failed")
+		}
+	}, [dispatch, loginStatus]);
+
+	useEffect(() => {
+		return () => {
+			dispatch(AuthAction.resetAuth())
+		}
+	}, [])
+
 	const handleLogin = (values, { setSubmitting }) => {
-		alert(JSON.stringify(values))
+		dispatch(AuthAction.login(values));
 	}
 
 	return (
@@ -23,6 +54,7 @@ const Login = () => {
 			<Card className='card-login'>
 				<CardHeader>
 					<h5 className='font-weight-bold'>Log In</h5>
+					{/* {login.message} */}
 				</CardHeader>
 				<CardBody>
 					<Formik
@@ -79,7 +111,7 @@ const Login = () => {
 								<Link to={'/register'} className='mt-2'>
 									Forgot password?
 								</Link>
-								<Button className='btn-primary btn-success px-3' title='Login' />
+								<Button type="submit" className='btn-primary btn-success px-3' title='Login' />
 							</div>
 							<div className='d-flex justify-content-start mt-3'>
 								<Link to={'/register'}>

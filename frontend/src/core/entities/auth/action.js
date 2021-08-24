@@ -6,5 +6,10 @@ export const AuthAction = {
             type: ActionType.LOGIN_BEGIN,
             values
         }
-    }
+    },
+    resetAuth() {
+        return {
+            type: ActionType.RESET_AUTH,
+        };
+    },
 }

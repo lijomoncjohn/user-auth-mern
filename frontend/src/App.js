@@ -17,6 +17,7 @@ function App() {
     routes = (
       <Switch >
         <Route path={'/home'} component={Home} />
+        <Route path='*' component={Home} />
       </Switch>
     )
   } else {
@@ -24,6 +25,7 @@ function App() {
       <Switch>
         <Route path={'/register'} component={Register} />
         <Route path={'/'} component={Login} />
+        <Route path='*' component={Login} />
       </Switch>
     )
   }

@@ -30,7 +30,15 @@ const reducer = createReducer(initialAuthState, {
         state.login.success = AUTH_STATE.LOGIN_FAILED;
         state.login.message = data.data.message;
         state.login.error = data.data.error;
-    }
+    },
+    // Reset authentication state
+    [ActionType.RESET_AUTH]: (state) => {
+        state.login.success = false;
+        state.login.message = null;
+        state.login.error = null;
+        state.login.data = {};
+    },
 })
+debugger;
 
 export default reducer;

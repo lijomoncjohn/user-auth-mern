@@ -3,11 +3,11 @@ import Config from '../../config/config.json';
 import { ApiMethods } from '../../base/constants';
 
 export class Service extends ApiWrapper {
-    static async login(values) {
+    static async login(token) {
         return this.sendRequest({
-            url: `${Config.CONTROLLER_AUTH}/${Config.ACTION_LOGIN}`,
-            method: ApiMethods.POST,
-            data: values,
+            url: `${Config.CONTROLLER_USER}`,
+            method: ApiMethods.GET,
+            token
         });
     }
 

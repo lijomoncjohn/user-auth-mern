@@ -16,7 +16,7 @@ exports.login = asyncHandler(async (req, res, next) => {
     const isMatch = await user.matchPassword(password);
 
     if (!isMatch) {
-        return res.status(403).josn({
+        return res.status(403).json({
             success: false,
             message: 'Invalid password',
         })
